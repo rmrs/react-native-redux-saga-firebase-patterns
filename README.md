@@ -1,0 +1,1 @@
+# react-native-redux-saga-firebase-patterns
