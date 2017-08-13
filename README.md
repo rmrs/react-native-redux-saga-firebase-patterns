@@ -1,4 +1,4 @@
-# Some code patterns for working with React Native, Firebase and Redux
+# Some code patterns for working with React Native, Redux, Redux-Saga and Firebase
 
 To run the tests
 ```
