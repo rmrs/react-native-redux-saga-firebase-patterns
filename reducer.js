@@ -1,14 +1,6 @@
-//@flow
-
 import createReducer from './createReducer'
 import * as types from './types'
 import { metaTypes } from './types'
-
-type SubState = {
-  inProgress: boolean,
-  error: string,
-  items: Object,
-}
 
 export function getInitialState() {
   let state = {}

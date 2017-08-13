@@ -1,4 +1,3 @@
-//@flow
 import firebase from './firebase'
 import * as types from './types'
 import { metaTypes } from './types'

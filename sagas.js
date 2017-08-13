@@ -1,5 +1,3 @@
-//@flow
-
 import * as types from './types'
 import { metaTypes, eventTypes } from './types'
 import firebase from './firebase'
@@ -17,7 +15,7 @@ import {
   cancelled,
 } from 'redux-saga/effects'
 
-export function* watchUpdateRequested(): Generator<void, void, void> {
+export function* watchUpdateRequested() {
   while (true) {
     const action = yield take(types.firebase.FIREBASE_UPDATE_REQUESTED)
     let getUpdates = null
@@ -33,7 +31,7 @@ export function* watchUpdateRequested(): Generator<void, void, void> {
   }
 }
 
-export function* watchRemoveRequested(): Generator<void, void, void> {
+export function* watchRemoveRequested() {
   while (true) {
     const action = yield take(types.firebase.FIREBASE_REMOVE_REQUESTED)
     let getPath = null
@@ -61,7 +59,7 @@ export function getUserContactsUpdates({ uid, contactId, name, phone }) {
   }
 }
 
-export function* updateItems(updates, metaType): Generator<void, void, void> {
+export function* updateItems(updates, metaType) {
   try {
     const ref = firebase.database().ref()
     yield call([ref, ref.update], updates)
@@ -71,7 +69,7 @@ export function* updateItems(updates, metaType): Generator<void, void, void> {
   }
 }
 
-export function* removeItem(path, metaType): Generator<void, void, void> {
+export function* removeItem(path, metaType) {
   try {
     const ref = firebase.database().ref(path)
     yield call([ref, ref.remove])
@@ -110,10 +108,7 @@ export function createEventChannel(ref) {
   return listener
 }
 
-export function* getDataAndListenToChannel(
-  ref,
-  metaType
-): Generator<void, void, void> {
+export function* getDataAndListenToChannel(ref, metaType) {
   const chan = yield call(createEventChannel, ref)
   try {
     try {
@@ -153,7 +148,7 @@ export function getUpdateAction(data, metaType) {
   }
 }
 
-export function* watchListener(metaType): Generator<void, void, void> {
+export function* watchListener(metaType) {
   while (true) {
     const listenRequestAction = yield take(
       types.firebase.FIREBASE_LISTEN_REQUESTED
