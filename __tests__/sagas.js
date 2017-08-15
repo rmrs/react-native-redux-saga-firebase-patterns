@@ -335,7 +335,7 @@ describe('database saga', () => {
   test('getUpdateOfferingUpdates', () => {
     const uid = '1'
     const contactId = '123'
-    const name = 'John Due'
+    const name = 'John Doe'
     const phone = '123456789'
 
     const updates = {

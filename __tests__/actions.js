@@ -86,7 +86,7 @@ describe('firebase actions', () => {
     ).toEqual(expectedAction)
   })
 
-  test('FIREBASE_UPDATE_REQUESTED', () => {
+  test(types.firebase.FIREBASE_UPDATE_REQUESTED, () => {
     const uid = '1'
     const expectedAction = {
       type: types.firebase.FIREBASE_UPDATE_REQUESTED,
@@ -98,7 +98,7 @@ describe('firebase actions', () => {
     ).toEqual(expectedAction)
   })
 
-  test('FIREBASE_UPDATE_FULFILLED', () => {
+  test(types.firebase.FIREBASE_UPDATE_FULFILLED, () => {
     const error = 'error'
     const expectedAction = {
       type: types.firebase.FIREBASE_UPDATE_FULFILLED,
@@ -111,7 +111,7 @@ describe('firebase actions', () => {
     )
   })
 
-  test('FIREBASE_UPDATE_REJECTED', () => {
+  test(types.firebase.FIREBASE_UPDATE_REJECTED, () => {
     const error = new Error('Error!')
     const expectedAction = {
       type: types.firebase.FIREBASE_UPDATE_REJECTED,
@@ -124,7 +124,7 @@ describe('firebase actions', () => {
     ).toEqual(expectedAction)
   })
 
-  test('FIREBASE_REMOVE_REQUESTED', () => {
+  test(types.firebase.FIREBASE_REMOVE_REQUESTED, () => {
     const uid = '1'
     const expectedAction = {
       type: types.firebase.FIREBASE_REMOVE_REQUESTED,
@@ -136,7 +136,7 @@ describe('firebase actions', () => {
     ).toEqual(expectedAction)
   })
 
-  test('FIREBASE_REMOVE_FULFILLED', () => {
+  test(types.firebase.FIREBASE_REMOVE_FULFILLED, () => {
     const error = 'error'
     const expectedAction = {
       type: types.firebase.FIREBASE_REMOVE_FULFILLED,
@@ -149,7 +149,7 @@ describe('firebase actions', () => {
     )
   })
 
-  test('FIREBASE_REMOVE_REJECTED', () => {
+  test(types.firebase.FIREBASE_REMOVE_REJECTED, () => {
     const error = new Error('Error!')
     const expectedAction = {
       type: types.firebase.FIREBASE_REMOVE_REJECTED,
@@ -162,7 +162,7 @@ describe('firebase actions', () => {
     ).toEqual(expectedAction)
   })
 
-  test('FIREBASE_LISTEN_REMOVED', () => {
+  test(types.firebase.FIREBASE_LISTEN_REMOVED, () => {
     const expectedAction = {
       type: types.firebase.FIREBASE_LISTEN_REMOVED,
       payload: { clearItems: true },
@@ -174,7 +174,7 @@ describe('firebase actions', () => {
     )
   })
 
-  test('FIREBASE_REMOVE_LISTENER_REQUESTED', () => {
+  test(types.firebase.FIREBASE_REMOVE_LISTENER_REQUESTED, () => {
     const expectedAction = {
       type: types.firebase.FIREBASE_REMOVE_LISTENER_REQUESTED,
       payload: { clearItems: true },
@@ -186,7 +186,7 @@ describe('firebase actions', () => {
     ).toEqual(expectedAction)
   })
 
-  test('FIREBASE_REMOVE_ALL_LISTENERS_REQUESTED', () => {
+  test(types.firebase.FIREBASE_REMOVE_ALL_LISTENERS_REQUESTED, () => {
     const expectedAction = {
       type: types.firebase.FIREBASE_REMOVE_ALL_LISTENERS_REQUESTED,
       payload: { clearItems: true },
@@ -216,5 +216,53 @@ describe('firebase actions', () => {
       meta: { type: metaTypes.userContacts },
     }
     expect(actions.listenToUserContacts(uid)).toEqual(expectedAction)
+  })
+
+  test('removeMessagesListenerRequested', () => {
+    const expectedAction = {
+      type: types.firebase.FIREBASE_REMOVE_LISTENER_REQUESTED,
+      payload: { clearItems: false },
+      meta: { type: metaTypes.messages },
+    }
+    expect(actions.removeMessagesListenerRequested()).toEqual(expectedAction)
+  })
+
+  test('removeUserContactsListenerRequested', () => {
+    const expectedAction = {
+      type: types.firebase.FIREBASE_REMOVE_LISTENER_REQUESTED,
+      payload: { clearItems: false },
+      meta: { type: metaTypes.userContacts },
+    }
+    expect(actions.removeUserContactsListenerRequested()).toEqual(
+      expectedAction
+    )
+  })
+
+  test('updateUserContactsRequested', () => {
+    const uid = '1'
+    const contactId = '123'
+    const name = 'John Doe'
+    const phone = '123456789'
+    const expectedAction = {
+      type: types.firebase.FIREBASE_UPDATE_REQUESTED,
+      payload: { uid, contactId, name, phone },
+      meta: { type: metaTypes.userContacts },
+    }
+    expect(
+      actions.updateUserContactsRequested(uid, contactId, name, phone)
+    ).toEqual(expectedAction)
+  })
+
+  test('removeUserContactsRequested', () => {
+    const uid = '1'
+    const contactId = '123'
+    const expectedAction = {
+      type: types.firebase.FIREBASE_REMOVE_REQUESTED,
+      payload: { uid, contactId },
+      meta: { type: metaTypes.userContacts },
+    }
+    expect(actions.removeUserContactsRequested(uid, contactId)).toEqual(
+      expectedAction
+    )
   })
 })
