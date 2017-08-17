@@ -1,3 +1,6 @@
+import * as types from './types'
+import { metaTypes } from './types'
+
 export function firebaseRemoveRequested(payload, metaType) {
   return {
     type: types.firebase.FIREBASE_REMOVE_REQUESTED,

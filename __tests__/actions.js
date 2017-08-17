@@ -1,17 +1,9 @@
 import * as actions from '../actions'
 import * as types from '../types'
+import firebase from '../firebase'
 import { metaTypes } from '../types'
-import RNFirebase from 'react-native-firebase'
-import configureMockStore from 'redux-mock-store'
-import { getInitialState } from '../reducer'
-
-const mockStore = configureMockStore()
 
 describe('firebase actions', () => {
-  beforeEach(() => {
-    RNFirebase.reset()
-  })
-
   test(types.firebase.FIREBASE_LISTEN_REQUESTED, () => {
     const ref = firebase.database().ref('someRef')
     const expectedAction = {

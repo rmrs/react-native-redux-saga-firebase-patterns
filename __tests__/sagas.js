@@ -1,20 +1,10 @@
 import * as sagas from '../sagas'
 import * as types from '../types'
 import firebase from '../firebase'
-import {
-  all,
-  put,
-  takeEvery,
-  take,
-  call,
-  fork,
-  cancel,
-  flush,
-  cancelled,
-} from 'redux-saga/effects'
-import { cloneableGenerator, createMockTask } from 'redux-saga/utils'
 import * as actions from '../actions'
 import { metaTypes, eventTypes } from '../types'
+import { cloneableGenerator, createMockTask } from 'redux-saga/utils'
+import { put, take, call, fork, cancel, flush } from 'redux-saga/effects'
 
 describe('database saga', () => {
   test(`watchUpdateRequested ${metaTypes.userContacts}`, () => {

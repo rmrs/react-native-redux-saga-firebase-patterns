@@ -1,3 +1,9 @@
+import * as types from './types'
+import { metaTypes } from './types'
+import * as actions from './actions'
+import firebase from './firebase'
+import { put, take, call, fork } from 'redux-saga/effects'
+
 export function* watchRemoveRequested() {
   while (true) {
     const action = yield take(types.firebase.FIREBASE_REMOVE_REQUESTED)
@@ -23,8 +29,8 @@ export function* removeItem(path, metaType) {
   try {
     const ref = firebase.database().ref(path)
     yield call([ref, ref.remove])
-    yield put(FirebaseActions.firebaseRemoveFulfilled(metaType))
+    yield put(actions.firebaseRemoveFulfilled(metaType))
   } catch (error) {
-    yield put(FirebaseActions.firebaseRemoveRejected(error, metaType))
+    yield put(actions.firebaseRemoveRejected(error, metaType))
   }
 }

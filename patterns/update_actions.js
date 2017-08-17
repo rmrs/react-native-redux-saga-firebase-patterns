@@ -1,3 +1,6 @@
+import * as types from './types'
+import { metaTypes } from './types'
+
 export function firebaseUpdateRequested(payload, metaType) {
   return {
     type: types.firebase.FIREBASE_UPDATE_REQUESTED,

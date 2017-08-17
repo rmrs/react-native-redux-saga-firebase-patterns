@@ -1,7 +1,7 @@
 'use strict'
 
 export class Database {
-  ref = (path) => {
+  ref = path => {
     if (!this[path]) {
       this[path] = new Reference(path)
     }
@@ -12,7 +12,7 @@ export class Database {
 export class Reference {
   constructor(path) {
     this.path = path
-    this.snap = { val: () => this._val()}
+    this.snap = { val: () => this._val() }
     this.data = null
   }
 
@@ -21,7 +21,7 @@ export class Reference {
   })
 
   once = jest.fn((param, callback) => {
-    const promise = new Promise ((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       if (callback) {
         callback(this.snap)
         resolve()
@@ -34,7 +34,7 @@ export class Reference {
   })
 
   on = jest.fn((param, callback) => {
-    const promise = new Promise ((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       if (callback) {
         callback(this.snap)
         resolve()
@@ -52,7 +52,7 @@ export class Reference {
     return promise
   })
 
-  update = jest.fn((data) => {
+  update = jest.fn(data => {
     const promise = Promise.resolve()
     RNFirebase.promises.push(promise)
     return promise

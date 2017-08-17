@@ -1,3 +1,6 @@
+import * as types from './types'
+import { metaTypes } from './types'
+
 export function firebaseListenRequested(ref, metaType) {
   return {
     type: types.firebase.FIREBASE_LISTEN_REQUESTED,
@@ -30,22 +33,6 @@ export function firebaseListenChildAdded(id, value, metaType) {
   }
 }
 
-export function firebaseListenChildChanged(id, value, metaType) {
-  return {
-    type: types.firebase.FIREBASE_LISTEN_CHILD_CHANGED,
-    payload: { id, value },
-    meta: { type: metaType },
-  }
-}
-
-export function firebaseListenChildRemoved(id, metaType) {
-  return {
-    type: types.firebase.FIREBASE_LISTEN_CHILD_REMOVED,
-    payload: { id },
-    meta: { type: metaType },
-  }
-}
-
 export function firebaseListenRemoved(clearItems, metaType) {
   return {
     type: types.firebase.FIREBASE_LISTEN_REMOVED,
@@ -59,12 +46,5 @@ export function firebaseRemoveListenerRequested(clearItems, metaType) {
     type: types.firebase.FIREBASE_REMOVE_LISTENER_REQUESTED,
     payload: { clearItems },
     meta: { type: metaType },
-  }
-}
-
-export function firebaseRemoveAllListenersRequested() {
-  return {
-    type: types.firebase.FIREBASE_REMOVE_ALL_LISTENERS_REQUESTED,
-    payload: { clearItems: true },
   }
 }

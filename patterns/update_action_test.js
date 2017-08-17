@@ -1,3 +1,7 @@
+import * as actions from '../actions'
+import * as types from '../types'
+import { metaTypes } from '../types'
+
 test('updateUserContactsRequested', () => {
   const uid = '1'
   const contactId = '123'

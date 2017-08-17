@@ -1,3 +1,12 @@
+import * as sagas from '../sagas'
+import * as types from '../types'
+import * as actions from '../actions'
+import firebase from '../firebase'
+import { put, take, call, fork, cancel, flush } from 'redux-saga/effects'
+
+import { cloneableGenerator } from 'redux-saga/utils'
+import { metaTypes } from '../types'
+
 test(`watchUpdateRequested ${metaTypes.userContacts}`, () => {
   const generator = sagas.watchUpdateRequested()
   const updates = { updates: { a: '1', b: '2' } }

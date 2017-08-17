@@ -1,19 +1,9 @@
 import * as types from './types'
 import { metaTypes, eventTypes } from './types'
+import * as actions from './actions'
 import firebase from './firebase'
 import { eventChannel, buffers } from 'redux-saga'
-import * as FirebaseActions from './actions'
-import {
-  all,
-  put,
-  takeEvery,
-  take,
-  call,
-  fork,
-  cancel,
-  flush,
-  cancelled,
-} from 'redux-saga/effects'
+import { put, take, call, fork, cancel, flush } from 'redux-saga/effects'
 
 export function* watchUpdateRequested() {
   while (true) {
@@ -63,9 +53,9 @@ export function* updateItems(updates, metaType) {
   try {
     const ref = firebase.database().ref()
     yield call([ref, ref.update], updates)
-    yield put(FirebaseActions.firebaseUpdateFulfilled(metaType))
+    yield put(actions.firebaseUpdateFulfilled(metaType))
   } catch (error) {
-    yield put(FirebaseActions.firebaseUpdateRejected(error, metaType))
+    yield put(actions.firebaseUpdateRejected(error, metaType))
   }
 }
 
@@ -73,9 +63,9 @@ export function* removeItem(path, metaType) {
   try {
     const ref = firebase.database().ref(path)
     yield call([ref, ref.remove])
-    yield put(FirebaseActions.firebaseRemoveFulfilled(metaType))
+    yield put(actions.firebaseRemoveFulfilled(metaType))
   } catch (error) {
-    yield put(FirebaseActions.firebaseRemoveRejected(error, metaType))
+    yield put(actions.firebaseRemoveRejected(error, metaType))
   }
 }
 
@@ -116,9 +106,9 @@ export function* getDataAndListenToChannel(ref, metaType) {
       yield flush(chan)
       const val = snap.val()
       const value = val ? val : {}
-      yield put(FirebaseActions.firebaseListenFulfilled(value, metaType))
+      yield put(actions.firebaseListenFulfilled(value, metaType))
     } catch (error) {
-      yield put(FirebaseActions.firebaseListenRejected(error, metaType))
+      yield put(actions.firebaseListenRejected(error, metaType))
     }
     while (true) {
       const data = yield take(chan)
@@ -132,19 +122,11 @@ export function* getDataAndListenToChannel(ref, metaType) {
 export function getUpdateAction(data, metaType) {
   switch (data.eventType) {
     case eventTypes.CHILD_ADDED:
-      return FirebaseActions.firebaseListenChildAdded(
-        data.key,
-        data.value,
-        metaType
-      )
+      return actions.firebaseListenChildAdded(data.key, data.value, metaType)
     case eventTypes.CHILD_CHANGED:
-      return FirebaseActions.firebaseListenChildChanged(
-        data.key,
-        data.value,
-        metaType
-      )
+      return actions.firebaseListenChildChanged(data.key, data.value, metaType)
     case eventTypes.CHILD_REMOVED:
-      return FirebaseActions.firebaseListenChildRemoved(data.key, metaType)
+      return actions.firebaseListenChildRemoved(data.key, metaType)
   }
 }
 
@@ -173,10 +155,7 @@ export function* watchListener(metaType) {
         ) {
           yield cancel(task)
           yield put(
-            FirebaseActions.firebaseListenRemoved(
-              !!action.payload.clearItems,
-              metaType
-            )
+            actions.firebaseListenRemoved(!!action.payload.clearItems, metaType)
           )
 
           if (action.type === types.firebase.FIREBASE_LISTEN_REQUESTED) {

@@ -1,3 +1,7 @@
+import * as types from './types'
+import { metaTypes } from './types'
+...
+
 [types.firebase.FIREBASE_LISTEN_REQUESTED](state, action) {
   const property = action.meta.type
   const propertyState = state[property]
@@ -38,32 +42,6 @@
     ...propertyState.items,
     [action.payload.id]: action.payload.value,
   }
-
-  let newState = {
-    ...state,
-    [property]: { ...propertyState, inProgress: false, error: '', items },
-  }
-  return newState
-},
-[types.firebase.FIREBASE_LISTEN_CHILD_CHANGED](state, action) {
-  const property = action.meta.type
-  const propertyState = state[property]
-  const items = {
-    ...propertyState.items,
-    [action.payload.id]: action.payload.value,
-  }
-
-  let newState = {
-    ...state,
-    [property]: { ...propertyState, inProgress: false, error: '', items },
-  }
-  return newState
-},
-[types.firebase.FIREBASE_LISTEN_CHILD_REMOVED](state, action) {
-  const property = action.meta.type
-  const propertyState = state[property]
-  const items = { ...propertyState.items }
-  delete items[action.payload.id]
 
   let newState = {
     ...state,
