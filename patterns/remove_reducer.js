@@ -1,7 +1,7 @@
 import * as types from './types'
 import { metaTypes } from './types'
 
-...
+//...
 
 [types.firebase.FIREBASE_REMOVE_REQUESTED](state, action) {
   const property = action.meta.type
